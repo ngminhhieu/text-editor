@@ -1,39 +1,38 @@
-import * as React from "react";
+// import * as React from "react";
+// import { Admin, Resource } from 'react-admin';
+// import simpleRestProvider from 'ra-data-simple-rest';
+// import PostList from '../Post/PostList.jsx';
+// import PostEdit from '../Post/PostEdit.jsx';
+// import PostCreate from '../Post/PostCreate.jsx';
+// import { PostIcon } from '../Post/PostIcon.jsx'; // Tai sao lai khac PostCreate
+
+// const AdminPage = () => {
+//   return(
+//     <Admin title="My Custom Admin" dataProvider={simpleRestProvider('https://jsonplaceholder.typicode.com/')}>
+//         <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostIcon}/>
+//     </Admin>
+//   );
+// }
+
+// export default AdminPage;
+
+import React from 'react';
 import { Admin, Resource } from 'react-admin';
-import simpleRestProvider from 'ra-data-simple-rest';
-import PostList from '../Post/PostList.jsx';
+import jsonServerProvider from 'ra-data-json-server';
+import {UserList} from "../User/User.jsx";
+import PostList from "../Post/PostList.jsx";
 import PostEdit from '../Post/PostEdit.jsx';
-import PostCreate from '../Post/PostCreate.jsx';
-import { PostIcon } from '../Post/PostIcon.jsx'; // Tai sao lai khac PostCreate
-import Dashboard from '../Dashboard/Dashboard.jsx';
 
-const dataProvider = {
-  getList:    (resource, params) => Promise,
-  getOne:     (resource, params) => Promise,
-  getMany:    (resource, params) => Promise,
-  getManyReference: (resource, params) => Promise,
-  create:     (resource, params) => Promise,
-  update:     (resource, params) => Promise,
-  updateMany: (resource, params) => Promise,
-  delete:     (resource, params) => Promise,
-  deleteMany: (resource, params) => Promise,
+//connect the data provider to the REST endpoint
+const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+
+function App() {
+   return (
+       <Admin dataProvider={dataProvider}>
+           <Resource name="posts" list={PostList} edit={PostEdit}/>
+           <Resource name="users" list={UserList}/>
+       </Admin>
+   );
 }
 
-const authProvider = {
-  login: params => Promise.resolve(),
-  logout: params => Promise.resolve(),
-  checkAuth: params => Promise.resolve(),
-  checkError: error => Promise.resolve(),
-  getPermissions: params => Promise.resolve(),
-};
-
-const AdminPage = () => {
-  return(
-    <Admin title="My Custom Admin" dashboard={Dashboard} authProvider={authProvider} dataProvider={simpleRestProvider('http://localhost:3000')}>
-        <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostIcon}/>
-    </Admin>
-  );
-}
-
-export default AdminPage;
-
+export default App;
