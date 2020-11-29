@@ -19,18 +19,17 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
-import {UserList} from "../User/User.jsx";
 import PostList from "../Post/PostList.jsx";
 import PostEdit from '../Post/PostEdit.jsx';
+import PostCreate from '../Post/PostCreate.jsx';
 
 //connect the data provider to the REST endpoint
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+const dataProvider = jsonServerProvider('https://localhost:8000/api/v1');
 
 function App() {
    return (
        <Admin dataProvider={dataProvider}>
-           <Resource name="posts" list={PostList} edit={PostEdit}/>
-           <Resource name="users" list={UserList}/>
+           <Resource name="articles" list={PostList} edit={PostEdit} create={PostCreate}/>
        </Admin>
    );
 }
